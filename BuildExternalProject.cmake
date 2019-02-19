@@ -6,7 +6,7 @@ macro (BuildExternalProject_find_package target)
   mark_as_advanced(_CMAKE_PREFIX_PATH)
   list(APPEND CMAKE_PREFIX_PATH ${build_dir})
 
-  find_package(${target} MODULE QUIET)
+  find_package(${target} MODULE)
   if (NOT ${target}_FOUND)
     # Look for config version if there was no module
     find_package(${target} CONFIG REQUIRED HINTS ${build_dir} NO_DEFAULT_PATH)
@@ -66,7 +66,6 @@ function (BuildExternalProject_configure build_dir)
   execute_process(COMMAND ${CMAKE_COMMAND} -G "${CMAKE_GENERATOR}" .
     RESULT_VARIABLE result
     WORKING_DIRECTORY ${build_dir}
-    OUTPUT_QUIET
     )
 
   if(result)
@@ -78,7 +77,6 @@ function (BuildExternalProject_build build_dir)
   execute_process(COMMAND ${CMAKE_COMMAND} --build .
     RESULT_VARIABLE result
     WORKING_DIRECTORY ${build_dir}
-    OUTPUT_QUIET
     )
 
   if(result)
